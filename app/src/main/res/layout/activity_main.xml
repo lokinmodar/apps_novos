@@ -6,13 +6,221 @@
     android:layout_height="match_parent"
     tools:context="br.com.theoldpinkeye.guessthecelebrity.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <Button
+        android:id="@+id/comecarButton"
+        android:layout_width="224dp"
+        android:layout_height="194dp"
+        android:layout_column="0"
+        android:layout_row="1"
+        android:layout_weight="0.01"
+        android:background="@android:color/holo_purple"
+        android:onClick="jogar"
+        android:text="GO!"
+        android:textSize="60sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <GridLayout
+        android:id="@+id/buttonGrid"
+        android:layout_width="0dp"
+        android:layout_height="149dp"
+        android:layout_margin="0dp"
+        android:padding="0dp"
+        android:useDefaultMargins="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.911"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1">
+
+        <Button
+            android:id="@+id/conta1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:background="@android:color/holo_green_light"
+            android:onClick="responder"
+            android:padding="0dp"
+            android:tag="1"
+            android:text="Button"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/conta2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_row="1"
+            android:layout_rowWeight="1"
+            android:background="@android:color/holo_red_dark"
+            android:onClick="responder"
+            android:padding="0dp"
+            android:tag="2"
+            android:text="Button"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/conta3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:background="@android:color/holo_orange_light"
+            android:onClick="responder"
+            android:padding="0dp"
+            android:tag="3"
+            android:text="Button"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/conta4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_row="1"
+            android:layout_rowWeight="1"
+            android:background="@android:color/holo_blue_dark"
+            android:onClick="responder"
+            android:padding="0dp"
+            android:tag="4"
+            android:text="Button"
+            android:textSize="25sp" />
+
+    </GridLayout>
+
+    <LinearLayout
+        android:id="@+id/topoLayout"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="310dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginStart="12dp"
+        android:gravity="center_vertical|center_horizontal|center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/buttonGrid"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1">
+
+        <TextView
+            android:id="@+id/tempoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="15sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_constraintTop_creator="1" />
+
+        <TextView
+            android:id="@+id/pergunta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="xx + xx"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.066"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1" />
+
+        <TextView
+            android:id="@+id/acertosTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/holo_orange_dark"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="15sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_constraintTop_creator="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rodapeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintLeft_creator="1">
+
+        <TextView
+            android:id="@+id/resultado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="0"
+            android:layout_weight="0.01"
+            android:text="Correto!"
+            android:textSize="30sp"
+
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.904"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="9dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonGrid"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topoLayout"
+        app:srcCompat="@android:color/transparent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
 </android.support.constraint.ConstraintLayout>
