@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -21,6 +23,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
@@ -31,6 +35,12 @@ public class MainActivity extends AppCompatActivity {
     CountDownTimer timer;
     Resources res;
     String q;
+    String resultadoSite;
+    List<String> pessoas = new ArrayList<String>();
+    List<String> imagemPessoas = new ArrayList<String>();
+
+    ProgressBar carregando;
+    //Tarefa barraProg;
 
     int min = 1;
     int max = 20;
@@ -41,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     int calculo;
     boolean taRodando = false;
 
+    String nomePessoa;
+    String urlImagem;
 
     TextView tempoRest;
     Button comecar;
@@ -76,10 +88,13 @@ public class MainActivity extends AppCompatActivity {
         acertosCont = 0;
         totalPerg = 0;
         acertos.setText("0/0");
+        atualizaImagem(view);
+        downloadedImage.setVisibility(View.VISIBLE);
 
 
 
-        conta(view);
+
+       // conta(view);
 
         timer =  new CountDownTimer(30*1000+100, 1000) {
             public void onTick(long millisUntilFinished){
@@ -95,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 topo.setVisibility(View.INVISIBLE);
                 respostas.setVisibility(View.INVISIBLE);
                 rodape.setVisibility(View.VISIBLE);
+                downloadedImage.setVisibility(View.INVISIBLE);
                 comecar.setText("Play again!");
                 result.setText("Score: "+Integer.toString(acertosCont)+"/"+Integer.toString(totalPerg));
 
@@ -162,6 +178,29 @@ public class MainActivity extends AppCompatActivity {
         atualizaGrid(view);
     }
 
+
+    public String fotoRandom(){
+        Random myRandomizer = new Random();
+        String fotoRandom = imagemPessoas.get(myRandomizer.nextInt(imagemPessoas.size()));
+        Log.i("url da foto", fotoRandom);
+
+        int pos = imagemPessoas.indexOf(fotoRandom);
+        Log.i("Pos:", Integer.toString(pos));
+
+        return fotoRandom;
+    }
+
+    public String pegaNome(String url){
+        String urlFoto = url;
+        int posicao = imagemPessoas.indexOf(urlFoto);
+
+        Log.i("posicao", Integer.toString(posicao));
+        String nomePessoa = pessoas.get(posicao);
+
+        return nomePessoa;
+
+    }
+
     public int geraRandom(){
         int minRand = 0;
         int maxRand = 256;
@@ -189,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
         switch (tag){
             case 1:
 
-                conta1.setText(Integer.toString(calculo));
+                conta1.setText(pegaNome(urlImagem));
                 conta2.setText(Integer.toString(geraRandom()));
                 conta3.setText(Integer.toString(geraRandom()));
                 conta4.setText(Integer.toString(geraRandom()));
@@ -197,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 2:
 
-                conta2.setText(Integer.toString(calculo));
+                conta2.setText(pegaNome(urlImagem));
                 conta1.setText(Integer.toString(geraRandom()));
                 conta3.setText(Integer.toString(geraRandom()));
                 conta4.setText(Integer.toString(geraRandom()));
@@ -205,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
 
             case 3:
 
-                conta3.setText(Integer.toString(calculo));
+                conta3.setText(pegaNome(urlImagem));
                 conta1.setText(Integer.toString(geraRandom()));
                 conta2.setText(Integer.toString(geraRandom()));
                 conta4.setText(Integer.toString(geraRandom()));
@@ -214,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
 
             case 4:
 
-                conta4.setText(Integer.toString(calculo));
+                conta4.setText(pegaNome(urlImagem));
                 conta1.setText(Integer.toString(geraRandom()));
                 conta2.setText(Integer.toString(geraRandom()));
                 conta3.setText(Integer.toString(geraRandom()));
@@ -258,15 +297,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public class DownloadTask extends AsyncTask<String, Void, String> {
+    public class DownloadTask extends AsyncTask<String, String, String> {
+
+
+
 
 
         @Override
         protected String doInBackground(String... urls/*params*/) {
 
+
             String result = "";
             URL url;
             HttpURLConnection urlConnection = null;
+
 
             try {
 
@@ -302,20 +346,67 @@ public class MainActivity extends AppCompatActivity {
             // Log.i("URL", params[0]);
             //return "Done";
         }
+
+
     }
 
-    public void loga (View view){
+
+    /*class Tarefa extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            carregando.setProgress(0);
+            carregando.setMax(100);
+            int progressbarstatus = 0;
+        };
+
+        @Override
+        protected String doInBackground(String... params) {
+            for (int i = 0; i < 20; i++) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                carregando.incrementProgressBy(10);
+            }
+            return "completed";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // TODO Auto-generated method stub
+            super.onPostExecute(result);
+
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+
+            super.onProgressUpdate(values);
+        }
+    }*/
+
+    public void atualizaImagem (View view){
 
         // http://img1.ak.crunchyroll.com/i/spire1/45e1fc2b8245696100f97e2e58f877b91488777525_full.jpg
 
-        ImageDownload task = new ImageDownload();
+        ImageDownload taskFoto = new ImageDownload();
         Bitmap minhaImagem;
 
         try {
 
-            minhaImagem = task.execute("http://img1.ak.crunchyroll.com/i/spire1/45e1fc2b8245696100f97e2e58f877b91488777525_full.jpg").get();
+            urlImagem = fotoRandom();
+            minhaImagem = taskFoto.execute(urlImagem).get();
+            nomePessoa = pegaNome(urlImagem);
+
+
+
+
 
             downloadedImage.setImageBitmap(minhaImagem);
+
+
 
         }catch (Exception e){
 
@@ -360,22 +451,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void copiaUrlNome(){ //pensar no como extrair os dados!
-        String rio = "<div class=\"image\"><img src=\"http://cdn.posh24.se/images/:profile/c/50553\" alt=\"Prins Harry\"/></div>";
+    public void copiaUrlNome(){
+        String endereco =  resultadoSite;
+
+
         Pattern p = Pattern.compile("src=\"(.*?)\"");
-        Matcher m = p.matcher(rio);
+        Matcher m = p.matcher(endereco);
 
         while (m.find()) {
 
-            System.out.println(m.group(1));
-
+            if (m.group(1).contains("/cdn") && !m.group(1).contains("list")) {
+                imagemPessoas.add(m.group(1));
+                Log.i("End. imagem", m.group(1));//System.out.println(m.group(1));
+            }
         }
         p = Pattern.compile("alt=\"(.*?)\"");
-        m = p.matcher(rio);
+        m = p.matcher(endereco);
 
         while (m.find()) {
 
-            System.out.println(m.group(1));
+            //if (m.group(1).contains("alt")) {
+                pessoas.add(m.group(1));
+                Log.i("Nome celeb", m.group(1));
+           // }
+            //System.out.println(m.group(1));
 
         }
     }
@@ -391,7 +490,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        downloadedImage = (ImageView)findViewById(R.id.imageView);
+        downloadedImage = (ImageView)findViewById(R.id.fotaImageView);
         comecar = (Button) findViewById(R.id.comecarButton);
 
         topo = (LinearLayout) findViewById(R.id.topoLayout);
@@ -405,6 +504,7 @@ public class MainActivity extends AppCompatActivity {
 
         res = getResources();
 
+        carregando = (ProgressBar) findViewById(R.id.progressBar);
 
         tempoRest = (TextView) findViewById(R.id.tempoTextView);
         acertos = (TextView) findViewById(R.id.acertosTextView);
@@ -413,18 +513,29 @@ public class MainActivity extends AppCompatActivity {
 
 
         result.setText("");
+
         comecar.setVisibility(View.VISIBLE);
         topo.setVisibility(View.INVISIBLE);
         rodape.setVisibility(View.INVISIBLE);
         respostas.setVisibility(View.INVISIBLE);
+        downloadedImage.setVisibility(View.INVISIBLE);
 
+
+       // barraProg = new Tarefa();
+
+       // carregando.setVisibility(View.VISIBLE);
+        //barraProg.execute();
 
         DownloadTask task = new DownloadTask();
-        String result = null;
+        resultadoSite = null;
+       //
+
 
         try {
-            result = task.execute("http://dsouzaesouza.000webhostapp.com/").get();
-
+            resultadoSite = task.execute("http://www.posh24.se/kandisar/").get(); //dsouzaesouza.000webhostapp.com
+            //if(this.carregando.getVisibility()== View.VISIBLE){
+            //    carregando.setVisibility(View.INVISIBLE);
+            //}
         } catch (InterruptedException e) {
 
             e.printStackTrace();
@@ -434,8 +545,11 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Log.i("Conteúdo da URL", result);
-        Log.i("Length",String.valueOf(result.length()));
+
+
+        //Log.i("Conteúdo da URL", resultadoSite);
+        Log.i("Length",String.valueOf(resultadoSite.length()));
+        copiaUrlNome();
 
     }
 
