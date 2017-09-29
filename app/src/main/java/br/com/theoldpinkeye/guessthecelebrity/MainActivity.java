@@ -42,17 +42,16 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar carregando;
     //Tarefa barraProg;
 
-    int min = 1;
-    int max = 20;
-
     int acertosCont;
     int totalPerg;
 
-    int calculo;
+
     boolean taRodando = false;
 
     String nomePessoa;
     String urlImagem;
+
+    int posNome;
 
     TextView tempoRest;
     Button comecar;
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout rodape;
     GridLayout respostas;
 
-    // Button buttonCrica; // preciso ver se vai mesmo precisar...
+
 
     ImageView downloadedImage;
 
@@ -72,9 +71,6 @@ public class MainActivity extends AppCompatActivity {
     Button conta3;
     Button conta4;
 
-
-    private String[] myString;
-    private static final Random rgenerator = new Random();
 
 
     public void jogar(View view){
@@ -94,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-       // conta(view);
+        conta(view);
 
         timer =  new CountDownTimer(30*1000+100, 1000) {
             public void onTick(long millisUntilFinished){
@@ -106,15 +102,13 @@ public class MainActivity extends AppCompatActivity {
             public void onFinish(){
                 taRodando = false;
                 tempoRest.setText("0 s");
+                result.setText("Score: "+Integer.toString(acertosCont)+"/"+Integer.toString(totalPerg));
                 comecar.setVisibility(View.VISIBLE);
                 topo.setVisibility(View.INVISIBLE);
                 respostas.setVisibility(View.INVISIBLE);
                 rodape.setVisibility(View.VISIBLE);
                 downloadedImage.setVisibility(View.INVISIBLE);
                 comecar.setText("Play again!");
-                result.setText("Score: "+Integer.toString(acertosCont)+"/"+Integer.toString(totalPerg));
-
-
 
             }
 
@@ -131,71 +125,28 @@ public class MainActivity extends AppCompatActivity {
 
     public void conta (View view) {
 
-        myString = res.getStringArray(R.array.myArray);
-
-        q = myString[rgenerator.nextInt(myString.length)];
-
-        Random randomNum1 = new Random();
-        Random randomNum2 = new Random();
-
-        int num1 = randomNum1.nextInt(max - min + 1) + min;
-        int num2 = randomNum2.nextInt(max - min + 1) + min;
-
-        //     Log.i("Numero 1 = ", Integer.toString(num1));
-        //   Log.i("Numero 2 = ", Integer.toString(num2));
-
-
-        if (q.equals("/") && num2 > num1) {
-            int numTemp = num1;
-            num1 = num2;
-            num2 = numTemp;
-        }
-
-
-        if (q.equals("+")) {
-            pergunta.setText(Integer.toString(num1) + " " + q + " " + Integer.toString(num2));
-            calculo = num1 + num2;
-        } else if (q.equals("-")) {
-            pergunta.setText(Integer.toString(num1) + " " + q + " " + Integer.toString(num2));
-            calculo = num1 - num2;
-        } else if (q.equals("*")) {
-            pergunta.setText(Integer.toString(num1) + " " + q + " " + Integer.toString(num2));
-            calculo = num1 * num2;
-        } else if (q.equals("/") && num1 % num2 == 0) {
-            pergunta.setText(Integer.toString(num1) + " " + q + " " + Integer.toString(num2));
-            calculo = num1 / num2;
-
-        } else {
-            conta(view);
-        }
-
-
-        //   Log.i("Resultado ", Integer.toString(calculo));
-
-
-
-
+        atualizaImagem(view);
         atualizaGrid(view);
+
     }
 
 
     public String fotoRandom(){
         Random myRandomizer = new Random();
         String fotoRandom = imagemPessoas.get(myRandomizer.nextInt(imagemPessoas.size()));
-        Log.i("url da foto", fotoRandom);
+       // Log.i("url da foto", fotoRandom);
 
-        int pos = imagemPessoas.indexOf(fotoRandom);
-        Log.i("Pos:", Integer.toString(pos));
+        posNome = imagemPessoas.indexOf(fotoRandom);
+      //  Log.i("Pos:", Integer.toString(posNome));
 
         return fotoRandom;
     }
 
-    public String pegaNome(String url){
-        String urlFoto = url;
-        int posicao = imagemPessoas.indexOf(urlFoto);
+    public String pegaNome(int posicaoNome){
 
-        Log.i("posicao", Integer.toString(posicao));
-        String nomePessoa = pessoas.get(posicao);
+        String nomePessoa = pessoas.get(posicaoNome);
+
+       // Log.i("Nome pessoa", nomePessoa);
 
         return nomePessoa;
 
@@ -203,12 +154,12 @@ public class MainActivity extends AppCompatActivity {
 
     public int geraRandom(){
         int minRand = 0;
-        int maxRand = 256;
+        int maxRand = 99;
 
         Random rand = new Random();
 
         int randomRes = rand.nextInt(maxRand - minRand + 1) + minRand;
-        while (randomRes == calculo){
+        while (randomRes == posNome){
             randomRes = rand.nextInt(maxRand - minRand + 1) + minRand;
         }
         return randomRes;
@@ -228,35 +179,35 @@ public class MainActivity extends AppCompatActivity {
         switch (tag){
             case 1:
 
-                conta1.setText(pegaNome(urlImagem));
-                conta2.setText(Integer.toString(geraRandom()));
-                conta3.setText(Integer.toString(geraRandom()));
-                conta4.setText(Integer.toString(geraRandom()));
+                conta1.setText(nomePessoa);
+                conta2.setText(pessoas.get(geraRandom()));
+                conta3.setText(pessoas.get(geraRandom()));
+                conta4.setText(pessoas.get(geraRandom()));
 
                 break;
             case 2:
 
-                conta2.setText(pegaNome(urlImagem));
-                conta1.setText(Integer.toString(geraRandom()));
-                conta3.setText(Integer.toString(geraRandom()));
-                conta4.setText(Integer.toString(geraRandom()));
+                conta2.setText(nomePessoa);
+                conta1.setText(pessoas.get(geraRandom()));
+                conta3.setText(pessoas.get(geraRandom()));
+                conta4.setText(pessoas.get(geraRandom()));
                 break;
 
             case 3:
 
-                conta3.setText(pegaNome(urlImagem));
-                conta1.setText(Integer.toString(geraRandom()));
-                conta2.setText(Integer.toString(geraRandom()));
-                conta4.setText(Integer.toString(geraRandom()));
+                conta3.setText(nomePessoa);
+                conta1.setText(pessoas.get(geraRandom()));
+                conta2.setText(pessoas.get(geraRandom()));
+                conta4.setText(pessoas.get(geraRandom()));
 
                 break;
 
             case 4:
 
-                conta4.setText(pegaNome(urlImagem));
-                conta1.setText(Integer.toString(geraRandom()));
-                conta2.setText(Integer.toString(geraRandom()));
-                conta3.setText(Integer.toString(geraRandom()));
+                conta4.setText(nomePessoa);
+                conta1.setText(pessoas.get(geraRandom()));
+                conta2.setText(pessoas.get(geraRandom()));
+                conta3.setText(pessoas.get(geraRandom()));
 
                 break;
         }
@@ -273,24 +224,28 @@ public class MainActivity extends AppCompatActivity {
 
         Button bostao = (Button) view;
 
-        // int botaoApertado = Integer.parseInt(bostao.getTag().toString());
-
-
-        //   Log.i("botao apertado", Integer.toString(botaoApertado));
-
-        if (bostao.getText().equals(Integer.toString(calculo))){
+         if (bostao.getText().equals(nomePessoa)){
 
             acertosCont += 1;
             totalPerg += 1;
             acertos.setText(Integer.toString(acertosCont)+"/"+Integer.toString(totalPerg));
-            result.setText("Acertou!");
+             if (taRodando == true){
+                 result.setText("Acertou!");
+             } else {
+                 result.setText("Score: "+Integer.toString(acertosCont)+"/"+Integer.toString(totalPerg));
+             }
 
             conta(view);
 
         } else {
             totalPerg += 1;
             acertos.setText(Integer.toString(acertosCont)+"/"+Integer.toString(totalPerg));
-            result.setText("Errou!");
+            if (taRodando == true){
+                result.setText("Errou!");
+            } else {
+                result.setText("Score: "+Integer.toString(acertosCont)+"/"+Integer.toString(totalPerg));
+            }
+
             conta(view);
         }
 
@@ -298,10 +253,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public class DownloadTask extends AsyncTask<String, String, String> {
-
-
-
-
 
         @Override
         protected String doInBackground(String... urls/*params*/) {
@@ -351,45 +302,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /*class Tarefa extends AsyncTask<String, String, String> {
-        @Override
-        protected void onPreExecute() {
-            carregando.setProgress(0);
-            carregando.setMax(100);
-            int progressbarstatus = 0;
-        };
 
-        @Override
-        protected String doInBackground(String... params) {
-            for (int i = 0; i < 20; i++) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                carregando.incrementProgressBy(10);
-            }
-            return "completed";
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            // TODO Auto-generated method stub
-            super.onPostExecute(result);
-
-        }
-
-        @Override
-        protected void onProgressUpdate(String... values) {
-
-            super.onProgressUpdate(values);
-        }
-    }*/
 
     public void atualizaImagem (View view){
-
-        // http://img1.ak.crunchyroll.com/i/spire1/45e1fc2b8245696100f97e2e58f877b91488777525_full.jpg
 
         ImageDownload taskFoto = new ImageDownload();
         Bitmap minhaImagem;
@@ -398,21 +313,15 @@ public class MainActivity extends AppCompatActivity {
 
             urlImagem = fotoRandom();
             minhaImagem = taskFoto.execute(urlImagem).get();
-            nomePessoa = pegaNome(urlImagem);
-
-
-
-
-
+            nomePessoa = pegaNome(posNome);
             downloadedImage.setImageBitmap(minhaImagem);
-
 
 
         }catch (Exception e){
 
             e.printStackTrace();
         }
-        Log.i("Mensagem:", "Manda ver!");
+        //Log.i("Mensagem:", "Manda ver!");
     }
 
     public class ImageDownload extends AsyncTask<String, Void, Bitmap>{
@@ -462,7 +371,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (m.group(1).contains("/cdn") && !m.group(1).contains("list")) {
                 imagemPessoas.add(m.group(1));
-                Log.i("End. imagem", m.group(1));//System.out.println(m.group(1));
+            //    Log.i("End. imagem", m.group(1));
             }
         }
         p = Pattern.compile("alt=\"(.*?)\"");
@@ -470,11 +379,8 @@ public class MainActivity extends AppCompatActivity {
 
         while (m.find()) {
 
-            //if (m.group(1).contains("alt")) {
-                pessoas.add(m.group(1));
-                Log.i("Nome celeb", m.group(1));
-           // }
-            //System.out.println(m.group(1));
+                 pessoas.add(m.group(1));
+           //     Log.i("Nome celeb", m.group(1));
 
         }
     }
@@ -520,22 +426,12 @@ public class MainActivity extends AppCompatActivity {
         respostas.setVisibility(View.INVISIBLE);
         downloadedImage.setVisibility(View.INVISIBLE);
 
-
-       // barraProg = new Tarefa();
-
-       // carregando.setVisibility(View.VISIBLE);
-        //barraProg.execute();
-
         DownloadTask task = new DownloadTask();
         resultadoSite = null;
-       //
-
 
         try {
             resultadoSite = task.execute("http://www.posh24.se/kandisar/").get(); //dsouzaesouza.000webhostapp.com
-            //if(this.carregando.getVisibility()== View.VISIBLE){
-            //    carregando.setVisibility(View.INVISIBLE);
-            //}
+
         } catch (InterruptedException e) {
 
             e.printStackTrace();
@@ -545,10 +441,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-
         //Log.i("Conteúdo da URL", resultadoSite);
-        Log.i("Length",String.valueOf(resultadoSite.length()));
+        //Log.i("Length",String.valueOf(resultadoSite.length()));
         copiaUrlNome();
 
     }
