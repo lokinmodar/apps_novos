@@ -13,10 +13,12 @@
         android:layout_column="0"
         android:layout_row="1"
         android:layout_weight="0.01"
-        android:background="@android:color/holo_purple"
+        android:background="#F44336"
+        android:gravity="center"
         android:onClick="jogar"
-        android:text="GO!"
-        android:textSize="60sp"
+        android:text="Jogar!"
+        android:textColor="#ffffff"
+        android:textSize="40sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -54,12 +56,14 @@
             android:layout_gravity="fill"
             android:layout_row="0"
             android:layout_rowWeight="1"
-            android:background="@android:color/holo_green_light"
+            android:background="#EF5350"
+            android:gravity="center"
             android:onClick="responder"
             android:padding="0dp"
             android:tag="1"
             android:text="Button"
-            android:textSize="10sp" />
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/conta2"
@@ -70,12 +74,14 @@
             android:layout_gravity="fill"
             android:layout_row="1"
             android:layout_rowWeight="1"
-            android:background="@android:color/holo_red_dark"
+            android:background="#C62828"
+            android:gravity="center"
             android:onClick="responder"
             android:padding="0dp"
             android:tag="2"
             android:text="Button"
-            android:textSize="10sp" />
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/conta3"
@@ -86,12 +92,14 @@
             android:layout_gravity="fill"
             android:layout_row="0"
             android:layout_rowWeight="1"
-            android:background="@android:color/holo_orange_light"
+            android:background="#E53935"
+            android:gravity="center"
             android:onClick="responder"
             android:padding="0dp"
             android:tag="3"
             android:text="Button"
-            android:textSize="10sp" />
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/conta4"
@@ -102,12 +110,14 @@
             android:layout_gravity="fill"
             android:layout_row="1"
             android:layout_rowWeight="1"
-            android:background="@android:color/holo_blue_dark"
+            android:background="#B71C1C"
+            android:gravity="center"
             android:onClick="responder"
             android:padding="0dp"
             android:tag="4"
             android:text="Button"
-            android:textSize="10sp" />
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
 
     </GridLayout>
 
@@ -131,10 +141,12 @@
             android:layout_column="0"
             android:layout_row="0"
             android:layout_weight="0.01"
+            android:gravity="center"
             android:text="Correto!"
-            android:textSize="30sp"
 
 
+            android:textColor="#000000"
+            android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -148,9 +160,9 @@
         android:id="@+id/fotaImageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="9dp"
+        android:layout_marginBottom="11dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonGrid"
-        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topoLayout"
@@ -158,7 +170,9 @@
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintVertical_bias="0.866"
+        android:layout_marginTop="15dp" />
 
     <LinearLayout
         android:id="@+id/topoLayout"
@@ -184,40 +198,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
+            android:background="#D50000"
             android:gravity="center"
             android:padding="10dp"
-            android:textSize="15sp"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_constraintTop_creator="1" />
 
-        <TextView
-            android:id="@+id/pergunta"
+        <Space
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="xx + xx"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.066"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintRight_creator="1" />
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/acertosTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@android:color/holo_orange_dark"
+            android:background="#FF1744"
             android:gravity="center"
             android:padding="10dp"
-            android:textSize="15sp"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_constraintTop_creator="1" />
@@ -233,6 +237,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1" />
 
 </android.support.constraint.ConstraintLayout>
