@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tempoRest;
     Button comecar;
     TextView acertos;
-    TextView pergunta;
+
     TextView result;
     LinearLayout topo;
     LinearLayout rodape;
@@ -102,13 +102,13 @@ public class MainActivity extends AppCompatActivity {
             public void onFinish(){
                 taRodando = false;
                 tempoRest.setText("0 s");
-                result.setText("Score: "+Integer.toString(acertosCont)+"/"+Integer.toString(totalPerg));
+                result.setText("Total: "+Integer.toString(acertosCont)+"/"+Integer.toString(totalPerg));
                 comecar.setVisibility(View.VISIBLE);
                 topo.setVisibility(View.INVISIBLE);
                 respostas.setVisibility(View.INVISIBLE);
                 rodape.setVisibility(View.VISIBLE);
                 downloadedImage.setVisibility(View.INVISIBLE);
-                comecar.setText("Play again!");
+                comecar.setText("De Novo!!");
 
             }
 
@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
              if (taRodando == true){
                  result.setText("Acertou!");
              } else {
-                 result.setText("Score: "+Integer.toString(acertosCont)+"/"+Integer.toString(totalPerg));
+                 result.setText("Total: "+Integer.toString(acertosCont)+"/"+Integer.toString(totalPerg));
              }
 
             conta(view);
@@ -243,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
             if (taRodando == true){
                 result.setText("Errou!");
             } else {
-                result.setText("Score: "+Integer.toString(acertosCont)+"/"+Integer.toString(totalPerg));
+                result.setText("Total: "+Integer.toString(acertosCont)+"/"+Integer.toString(totalPerg));
             }
 
             conta(view);
@@ -414,7 +414,7 @@ public class MainActivity extends AppCompatActivity {
 
         tempoRest = (TextView) findViewById(R.id.tempoTextView);
         acertos = (TextView) findViewById(R.id.acertosTextView);
-        pergunta = (TextView) findViewById(R.id.pergunta);
+
         result = (TextView) findViewById(R.id.resultado);
 
 
