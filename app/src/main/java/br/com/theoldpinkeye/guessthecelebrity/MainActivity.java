@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         topo.setVisibility(View.VISIBLE);
         result.setText("");
         rodape.setVisibility(View.VISIBLE);
-
         respostas.setVisibility(View.VISIBLE);
         acertosCont = 0;
         totalPerg = 0;
@@ -87,12 +86,9 @@ public class MainActivity extends AppCompatActivity {
         atualizaImagem(view);
         downloadedImage.setVisibility(View.VISIBLE);
 
+        proximaPessoa(view);
 
-
-
-        conta(view);
-
-        timer =  new CountDownTimer(30*1000+100, 1000) {
+        timer =  new CountDownTimer(60*1000+100, 1000) {
             public void onTick(long millisUntilFinished){
                 taRodando = true;
                 tempoRest.setText(String.valueOf(millisUntilFinished/1000)+ " s");
@@ -123,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public void conta (View view) {
+    public void proximaPessoa (View view) {
 
         atualizaImagem(view);
         atualizaGrid(view);
@@ -154,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
     public int geraRandom(){
         int minRand = 0;
-        int maxRand = 99;
+        int maxRand = pessoas.size()-1;
 
         Random rand = new Random();
 
@@ -174,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
         int maxTag = 4;
 
         int tag = randomTag.nextInt(maxTag - minTag + 1) + minTag;
-
 
         switch (tag){
             case 1:
@@ -229,24 +224,25 @@ public class MainActivity extends AppCompatActivity {
             acertosCont += 1;
             totalPerg += 1;
             acertos.setText(Integer.toString(acertosCont)+"/"+Integer.toString(totalPerg));
-             if (taRodando == true){
+
+             if (taRodando){
                  result.setText("Acertou!");
              } else {
                  result.setText("Total: "+Integer.toString(acertosCont)+"/"+Integer.toString(totalPerg));
              }
 
-            conta(view);
+             proximaPessoa(view);
 
         } else {
             totalPerg += 1;
             acertos.setText(Integer.toString(acertosCont)+"/"+Integer.toString(totalPerg));
-            if (taRodando == true){
-                result.setText("Errou!");
+            if (taRodando){
+                result.setText("Errou! Era " + nomePessoa +"!");
             } else {
                 result.setText("Total: "+Integer.toString(acertosCont)+"/"+Integer.toString(totalPerg));
             }
 
-            conta(view);
+            proximaPessoa(view);
         }
 
     }
@@ -329,7 +325,6 @@ public class MainActivity extends AppCompatActivity {
         URL url;
         HttpURLConnection urlConnection = null;
 
-
         @Override
         protected Bitmap doInBackground(String... urls) {
 
@@ -374,6 +369,7 @@ public class MainActivity extends AppCompatActivity {
             //    Log.i("End. imagem", m.group(1));
             }
         }
+
         p = Pattern.compile("alt=\"(.*?)\"");
         m = p.matcher(endereco);
 
@@ -410,13 +406,10 @@ public class MainActivity extends AppCompatActivity {
 
         res = getResources();
 
-        carregando = (ProgressBar) findViewById(R.id.progressBar);
-
+//        carregando = (ProgressBar) findViewById(R.id.progressBar);
         tempoRest = (TextView) findViewById(R.id.tempoTextView);
         acertos = (TextView) findViewById(R.id.acertosTextView);
-
         result = (TextView) findViewById(R.id.resultado);
-
 
         result.setText("");
 
@@ -444,6 +437,9 @@ public class MainActivity extends AppCompatActivity {
         //Log.i("Conteúdo da URL", resultadoSite);
         //Log.i("Length",String.valueOf(resultadoSite.length()));
         copiaUrlNome();
+
+        Log.i("tamanho lista de nomes", Integer.toString(pessoas.size()));
+        Log.i("tamanho lista de fotos", Integer.toString(imagemPessoas.size()));
 
     }
 
